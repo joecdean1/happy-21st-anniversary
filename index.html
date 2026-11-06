@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#371b28">
+  <title>A card for you</title>
+  <style>
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: #211c20; color: #542c38; font: 1rem/1.45 "Gill Sans", "Avenir Next", Arial, sans-serif; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #ac715e; outline-offset: 4px; }
+    #gate { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px;
+      background: radial-gradient(ellipse at 48% 28%, #72404b 0%, #492634 50%, #2d1825 100%); }
+    .stationery { width: min(100%, 430px); position: relative; text-align: center; padding: 27px 31px 26px;
+      border: 1px solid #d9bba2; border-radius: 4px; background: linear-gradient(155deg,#fff9ef, #f8eee0 82%);
+      box-shadow: 0 18px 56px #230d1e60; }
+    .stationery::before { content: ""; position: absolute; inset: 8px; border: 1px solid #cbb393; pointer-events: none; }
+    h1, .signature { font-family: Baskerville, "Palatino Linotype", Georgia, serif; font-style: italic; font-weight: 400; }
+    h1 { font-size: clamp(2.3rem, 8vw, 3.3rem); line-height: 1.13; margin: 3px 0 8px; }
+    .envelope { display: block; width: min(86%, 252px); height: auto; margin: 0 auto 6px; overflow: visible; }
+    #letter, #wax, #flap, #glint { transform-box: fill-box; }
+    #flap { transform-origin: center top; }
+    #wax { transform-origin: center; }
+    .opening #wax { animation: lift-seal .58s ease-in forwards; }
+    .opening #flap { animation: unfold .58s .22s ease-in-out both; }
+    .opening #letter { animation: take-letter .64s .36s cubic-bezier(.22,.7,.3,1) both; }
+    .opening #glint { animation: glimmer .6s .34s ease-out both; }
+    .opening form, .opening .signature { opacity: .3; transition: opacity .35s; }
+    @keyframes lift-seal { 32% { transform: translateY(-2px) scale(1.12); } to { transform: translate(5px,-18px) rotate(-10deg) scale(.86); opacity: 0; } }
+    @keyframes unfold { to { transform: scaleY(-.8); } }
+    @keyframes take-letter { to { transform: translateY(-34px) rotate(-3deg); } }
+    @keyframes glimmer { 0%,100% {opacity:0} 45% {opacity:.95} }
+    label { display: block; font-weight: 500; margin: 0 0 9px; }
+    .entry { display: grid; gap: 10px; max-width: 256px; margin: auto; }
+    #password, #open { width: 100%; min-height: 45px; border-radius: 4px; }
+    #password { background: #fffbf4; border: 1px solid #b59c89; color: #542c38; text-align: center; font-size: 1.15rem; letter-spacing: .19em; }
+    #password::placeholder { color: #77635d; font-size: .82rem; letter-spacing: .12em; }
+    #open { border: 1px solid #683747; background: #663343; color: #fff4e4; font-weight: 600; }
+    #open:hover { background: #512737; }
+    #open:disabled { cursor: wait; }
+    #status { min-height: 1.4em; margin: 6px 0 0; color: #783c4e; font-size: .88rem; }
+    .signature { margin: 0; font-size: 1.45rem; color: #754250; }
+    #inside { min-height: 100vh; min-height: 100svh; text-align: center; color: #fff4e3; }
+    iframe, video { display: block; width: 100%; border: 0; height: calc(100vh - 51px); height: calc(100svh - 51px); }
+    video { object-fit: contain; }
+    #switch { min-height: 46px; padding: 5px 18px; background: transparent; border: 0; color: #f0d7c5; text-decoration: underline; text-underline-offset: 4px; font-size: .9rem; }
+    @media (max-height: 580px) { #gate { padding-block: 14px; } .stationery { padding-block: 17px; } .envelope { width: 176px; } h1 { font-size: 2.25rem; } }
+    @media (prefers-reduced-motion: reduce) { .opening * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main id="gate">
+    <section class="stationery" aria-labelledby="dedication">
+      <h1 id="dedication">For my love,</h1>
+      <svg class="envelope" aria-hidden="true" viewBox="0 0 300 190">
+        <defs>
+          <linearGradient id="back" x2=".8" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#874c57"/><stop offset="1" stop-color="#532b3b"/></linearGradient>
+          <linearGradient id="pocket" x1="0" y1="0" x2="1" y2=".9"><stop stop-color="#a6676a"/><stop offset="1" stop-color="#723c4e"/></linearGradient>
+          <radialGradient id="rose" cx=".34" cy=".25" r=".9"><stop stop-color="#be6b70"/><stop offset=".65" stop-color="#a24c5b"/><stop offset="1" stop-color="#7d3547"/></radialGradient>
+        </defs>
+        <ellipse cx="150" cy="169" rx="104" ry="5" fill="#795347" opacity=".13"/>
+        <g transform="rotate(-3 150 111)" stroke-linejoin="round">
+          <rect x="33" y="49" width="234" height="112" rx="4" fill="url(#back)" stroke="#633c47"/>
+          <g id="letter"><rect x="46" y="52" width="208" height="96" rx="2" fill="#f7e8cf" stroke="#b39775"/>
+            <path d="M61 68h66m42 0h70M61 78h42m94 0h42" fill="none" stroke="#c6a780"/>
+            <path d="M150 77c-4-3-9-7-9-11 0-5 6-6 9-1 3-5 9-4 9 1 0 4-5 8-9 11z" fill="#a95668"/></g>
+          <path d="M34 51l115 64L266 51v107q0 3-4 3H38q-4 0-4-4Z" fill="url(#pocket)" stroke="#693e4b"/>
+          <path d="m35 158 84-64m146 64-85-64" fill="none" stroke="#cea997" opacity=".8"/>
+          <path id="flap" d="M34 50h232l-108 76q-8 5-16 0Z" fill="url(#back)" stroke="#bd9284" stroke-width="1.3"/>
+          <g id="wax"><path d="M149 104q6-2 10 2 7 0 9 7 5 5 2 12 0 6-7 9-4 6-11 4-7 2-12-3-8-2-8-10-4-6 1-12 1-7 9-8z" fill="#482334" opacity=".5" transform="translate(0 2)"/>
+            <path d="M149 103q6-2 10 2 7 0 9 7 5 5 2 12 0 6-7 9-4 6-11 4-7 2-12-3-8-2-8-10-4-6 1-12 1-7 9-8z" fill="url(#rose)" stroke="#783949"/>
+            <circle cx="151" cy="120" r="12.8" fill="none" stroke="#ce9392" stroke-width=".9"/>
+            <path d="M151 127c-3-3-8-6-8-10 0-4 5-5 8-1 3-4 8-3 8 1 0 4-5 7-8 10z" fill="#f6c7b0"/></g>
+        </g>
+        <path id="glint" opacity="0" d="m238 39 2-6 2 6 5 2-5 2-2 6-2-6-5-2z" fill="#c29863"/>
+      </svg>
+      <form id="unlock" autocomplete="off">
+        <label for="password">Enter our wedding date</label>
+        <div class="entry">
+          <input id="password" type="password" inputmode="numeric" enterkeyhint="go" maxlength="8" autocomplete="off" placeholder="MMDDYY" aria-describedby="status" required>
+          <button id="open" type="submit">Open your card</button>
+        </div>
+        <p id="status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="signature">Love, Joe</p>
+      <noscript>Turn on JavaScript to open your card.</noscript>
+    </section>
+  </main>
+  <section id="inside" aria-label="Your anniversary card" hidden>
+    <iframe id="card" sandbox="allow-scripts" title="Your animated anniversary card"></iframe>
+    <video controls playsinline preload="none" id="movie" aria-label="Your anniversary video" hidden></video>
+    <button id="switch" type="button">Watch as a video</button>
+  </section>
+  <script>
+    'use strict';
+    const byId = id => document.getElementById(id);
+    const form = byId('unlock'), input = byId('password'), status = byId('status');
+    const card = byId('card'), movie = byId('movie');
+    let sealed, videoURL, opening = false;
+
+    async function readCard(password) {
+      if (!sealed) {
+        const response = await fetch('./letter.bin', { credentials: 'omit', referrerPolicy: 'no-referrer' });
+        if (!response.ok) throw new Error('load');
+        sealed = new Uint8Array(await response.arrayBuffer());
+      }
+      const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+      const key = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', hash: 'SHA-256', iterations: 600000, salt: sealed.slice(0,16) },
+        material, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
+      );
+      const clear = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: sealed.slice(16,28) }, key, sealed.subarray(28));
+      const length = new DataView(clear).getUint32(0);
+      return {
+        html: new TextDecoder().decode(new Uint8Array(clear, 4, length)),
+        video: new Blob([new Uint8Array(clear, 4 + length)], { type: 'video/mp4' })
+      };
+    }
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (opening) return;
+      const password = input.value.trim().replaceAll('/', '');
+      if (!/^\d{6}$/.test(password)) {
+        status.textContent = 'Use two digits each for the month, day, and year.';
+        input.select();
+        return;
+      }
+      opening = true;
+      byId('open').disabled = true;
+      status.textContent = '';
+      try {
+        const content = await readCard(password);
+        input.value = '';
+        videoURL = URL.createObjectURL(content.video);
+        byId('gate').classList.add('opening');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          await new Promise(resolve => setTimeout(resolve, 1030));
+        }
+        byId('gate').hidden = true;
+        byId('inside').hidden = false;
+        card.srcdoc = content.html;
+        card.focus();
+        sealed = null;
+      } catch (error) {
+        status.textContent = error.name === 'OperationError'
+          ? 'Try our wedding date again, love.'
+          : 'The card couldn’t load. Please try again.';
+        input.focus();
+        input.select();
+      } finally {
+        opening = false;
+        byId('open').disabled = false;
+      }
+    });
+
+    byId('switch').addEventListener('click', () => {
+      if (movie.hidden) {
+        if (!movie.src) movie.src = videoURL;
+        movie.hidden = false;
+        card.hidden = true;
+        byId('switch').textContent = 'Back to the animated card';
+        movie.play().catch(() => {});
+      } else {
+        movie.pause();
+        movie.hidden = true;
+        card.hidden = false;
+        byId('switch').textContent = 'Watch as a video';
+        card.focus();
+      }
+    });
+  </script>
+</body>
+</html>
