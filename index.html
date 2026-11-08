@@ -82,7 +82,7 @@
       <form id="unlock" autocomplete="off">
         <label for="password">Enter our wedding date</label>
         <div class="entry">
-          <input id="password" type="password" inputmode="numeric" enterkeyhint="go" maxlength="8" autocomplete="off" placeholder="MMDDYY" aria-describedby="status" required>
+          <input id="password" type="text" inputmode="numeric" enterkeyhint="go" maxlength="8" autocomplete="off" spellcheck="false" placeholder="MM/DD/YY" aria-describedby="status" required>
           <button id="open" type="submit">Open your card</button>
         </div>
         <p id="status" role="status" aria-live="polite"></p>
@@ -102,6 +102,55 @@
     const form = byId('unlock'), input = byId('password'), status = byId('status');
     const card = byId('card'), movie = byId('movie');
     let sealed, videoURL, opening = false;
+
+    const dateDigits = text => text.replace(/\D/g, '');
+
+    function showDate(digits, cursor) {
+      digits = digits.slice(0, 6);
+      let formatted = digits.slice(0, 2);
+      if (digits.length >= 2) formatted += '/' + digits.slice(2, 4);
+      if (digits.length >= 4) formatted += '/' + digits.slice(4);
+      input.value = formatted;
+      const separators = Number(cursor >= 2) + Number(cursor >= 4);
+      const position = Math.min(formatted.length, cursor + separators);
+      input.setSelectionRange(position, position);
+    }
+
+    function insertDigits(text) {
+      const before = dateDigits(input.value.slice(0, input.selectionStart));
+      const after = dateDigits(input.value.slice(input.selectionEnd));
+      const added = dateDigits(text).slice(0, 6 - before.length - after.length);
+      if (added) showDate(before + added + after, before.length + added.length);
+    }
+
+    input.addEventListener('beforeinput', event => {
+      if (!event.cancelable) return;
+      if (event.inputType === 'insertText' && event.data != null) {
+        event.preventDefault();
+        insertDigits(event.data);
+        return;
+      }
+      // Treat the slash and its neighboring digit as one step when deleting.
+      const caret = input.selectionStart;
+      if (caret !== input.selectionEnd) return;
+      const backward = event.inputType === 'deleteContentBackward' && input.value[caret - 1] === '/';
+      const forward = event.inputType === 'deleteContentForward' && input.value[caret] === '/';
+      if (backward || forward) {
+        event.preventDefault();
+        const start = backward ? caret - 2 : caret;
+        input.setRangeText('', start, backward ? caret : Math.min(caret + 2, input.value.length), 'start');
+        showDate(dateDigits(input.value), dateDigits(input.value.slice(0, start)).length);
+      }
+    });
+    input.addEventListener('paste', event => {
+      if (!event.clipboardData) return;
+      event.preventDefault();
+      insertDigits(event.clipboardData.getData('text'));
+    });
+    // Cover replacements from autofill and keyboards that send only an input event.
+    input.addEventListener('input', () => {
+      showDate(dateDigits(input.value), dateDigits(input.value.slice(0, input.selectionStart)).length);
+    });
 
     async function readCard(password) {
       if (!sealed) {
